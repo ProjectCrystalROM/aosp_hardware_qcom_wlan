@@ -41,6 +41,10 @@ LOCAL_SRC_FILES := \
 	rtt.cpp
 
 LOCAL_MODULE := libwifi-hal-qcom
+# Source-kernel ports must export UAPI before compiling these consumers.
+ifneq ($(strip $(TARGET_KERNEL_SOURCE)),)
+LOCAL_ADDITIONAL_DEPENDENCIES += $(TARGET_OUT_INTERMEDIATES)/KERNEL_OBJ/usr
+endif
 LOCAL_SHARED_LIBRARIES += libnetutils liblog
 
 ifneq ($(wildcard external/libnl),)
